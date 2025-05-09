@@ -1,0 +1,7 @@
+if ((errors || []).length > 0) || ((validations || []).length > 0)
+  .flash-messages
+    each error in (errors || [])
+      .flash-message.danger #{error}
+
+    each validation in (validations || [])
+      .flash-message.danger #{validation.path}: #{validation.msg}

@@ -1,0 +1,30 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo_country_info_app
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: country_info_app
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/mongo
+    command: ["--auth"]
+  app:
+    build: .
+    container_name: node_country_info_app
+    environment:
+      DB_HOST: mongo
+      DB_NAME: country_info_app
+      DB_USER: root
+      DB_PASSWORD: example
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    volumes:
+      - ./:/app
+
+volumes:
+  mongodb_data:

@@ -1,0 +1,34 @@
+# macOS
+.DS_Store
+
+# VSCode
+.vscode/*
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+coverage/
+.nyc_output/
+
+# Express
+logs/
+*.log
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# MongoDB
+mongod.log
+*.mongodb
+*.mongorc.js
+
+# Build
+.cache/

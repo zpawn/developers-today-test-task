@@ -1,0 +1,28 @@
+extends ../layouts/main
+
+block styles
+  link(rel="stylesheet", href="/css/forms.css")
+  link(rel="stylesheet", href="/css/auth.css")
+
+block content
+  form(action="/login", method="post")
+    input(type="hidden", name="_csrf", value=(csrfToken))
+    .form-control
+      label(for="email") E-Mail
+      input(
+        type="string",
+        class=((validations || []).find(({ path }) => path === "email") ? "invalid" : ""),
+        name="email",
+        id="email",
+        value=((values || {}).email || "")
+      )
+    .form-control
+      label(for="password") Password
+      input(
+        type="password",
+        class=((validations || []).find(({ path }) => path === "password") ? "invalid" : ""),
+        name="password",
+        id="password",
+        value=((values || {}).password || "")
+      )
+    button.btn(type="submit") Login

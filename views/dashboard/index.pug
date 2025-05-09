@@ -1,0 +1,70 @@
+extends ../layouts/main
+
+block content
+  h1 Dashboard
+
+  form(action="/", method="get", id="country-form")
+    article.grid
+      section.grid-item
+          .form-control
+            label(for="country") Countries
+            select(name="country", id="country")
+              each country in countries
+                option(
+                  value=(`${country.countryCode}`)
+                  selected=(country.countryCode === values.country)
+                ) #{country.name}
+          if (countryInfo)
+            table
+              tr
+                td officialName:
+                td #{countryInfo.officialName}
+              tr
+                td countryCode:
+                td #{countryInfo.countryCode}
+              if (population)
+                tr
+                  td Population:
+                  td #{population.value} as of #{population.year}
+              tr
+                td region:
+                td #{countryInfo.region}
+              tr
+                td borders:
+                td
+                  ul
+                    each border in borders
+                      li #{border.commonName}
+          button.btn(type="submit") Get Country Info
+
+      section.grid-item
+        h3 Holidays
+        .form-control
+          label(for="year") Year:
+          input(
+            type="string",
+            name="year",
+            id="year",
+            value=((values || {}).year || "")
+            placeholder="enter the year"
+          )
+
+        if holidays.length > 0
+          each holiday in holidays
+          input(type="hidden", name=(holiday.date), value=(holiday.localName))
+            label(for=(holiday.date))
+              input(
+                type="checkbox",
+                id=holiday.date,
+                name="selectedHolidays[]",
+                value=holiday.date,
+              )
+              span #{holiday.date}, #{holiday.localName}
+              br
+        else
+          div No Holidays
+
+  br
+  form(id="save-holidays-form")
+    input(type="hidden", name="_csrf", value=(csrfToken))
+    button.btn(type="button", id="save-holidays") Saves selected holidays
